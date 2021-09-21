@@ -10,11 +10,11 @@ data class CharacterResponse(
 
 @JsonClass(generateAdapter = true)
 data class Data(
-    @Json(name = "results") val results: Results
+    @Json(name = "results") val results: List<Star>
 )
 
 @JsonClass(generateAdapter = true)
-data class Results(
+data class Star(
     @Json(name = "id") val id: Int,
     @Json(name = "name") val name: String,
     @Json(name = "description") val description: String,
