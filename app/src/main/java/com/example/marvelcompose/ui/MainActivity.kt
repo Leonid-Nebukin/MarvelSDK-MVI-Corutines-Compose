@@ -3,6 +3,7 @@ package com.example.marvelcompose.ui
 import android.os.Bundle
 import android.widget.Toast
 import androidx.activity.compose.setContent
+import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
@@ -13,18 +14,17 @@ import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.lifecycleScope
+import coil.compose.rememberImagePainter
 import com.example.marvelcompose.data.model.Star
 import com.example.marvelcompose.ui.theme.MarvelComposeTheme
 import com.example.marvelcompose.ui.viewmodel.CharactersList
 import com.example.marvelcompose.ui.viewmodel.MainViewModel
 import com.example.marvelcompose.utils.UIState
 import com.example.marvelcompose.utils.extension.withViewModel
-import com.skydoves.landscapist.glide.GlideImage
 import kotlinx.coroutines.flow.collect
 
 class MainActivity : BaseActivity() {
@@ -90,13 +90,10 @@ class MainActivity : BaseActivity() {
 
             val path = star.thumbnail.path + "." + star.thumbnail.extension
 
-            GlideImage(
-                imageModel = path,
-                contentScale = ContentScale.Crop,
+            Image(
+                painter = rememberImagePainter(path),
+                contentDescription = null,
                 modifier = Modifier.size(120.dp),
-                failure = {
-                    Text(text = "image request failed.")
-                }
             )
 
             Column(modifier = Modifier.padding(start = 16.dp)) {

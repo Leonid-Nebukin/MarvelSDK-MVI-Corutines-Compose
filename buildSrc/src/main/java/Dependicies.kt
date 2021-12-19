@@ -4,8 +4,6 @@ object Dependicies {
         const val appCompat = "androidx.appcompat:appcompat:1.4.0"
         const val material = "com.google.android.material:material:1.4.0"
         const val core = "androidx.core:core-ktx:1.7.0"
-        const val lifecycleRuntime = "androidx.lifecycle:lifecycle-runtime-ktx:2.4.0"
-        const val lifecycleLiveData = "androidx.lifecycle:lifecycle-livedata-ktx:2.4.0"
     }
 
     object Compose {
@@ -16,6 +14,7 @@ object Dependicies {
         const val tooling = "androidx.compose.ui:ui-tooling:$composeVersion"
         const val activity = "androidx.activity:activity-compose:1.4.0"
         const val junitTest = "androidx.compose.ui:ui-test-junit4:$composeVersion"
+        const val coil = "io.coil-kt:coil-compose:1.4.0"
     }
 
     object Network {
@@ -34,8 +33,6 @@ object Dependicies {
     }
 
     const val gradle = "com.android.tools.build:gradle:7.0.4"
-
-    const val glide = "com.github.skydoves:landscapist-glide:1.3.6"
 
     object Multithreading {
         const val coroutines = "org.jetbrains.kotlinx:kotlinx-coroutines-android:1.5.1"

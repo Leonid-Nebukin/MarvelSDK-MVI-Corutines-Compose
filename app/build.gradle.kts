@@ -64,17 +64,13 @@ dependencies {
     implementation(Dependicies.Android.appCompat)
     implementation(Dependicies.Android.material)
 
-
     //Compose
     implementation(Dependicies.Compose.ui)
     implementation(Dependicies.Compose.material)
     implementation(Dependicies.Compose.preview)
     implementation(Dependicies.Compose.activity)
+    implementation(Dependicies.Compose.coil)
     debugImplementation(Dependicies.Compose.tooling)
-
-    //Lifecycle
-    implementation(Dependicies.Android.lifecycleRuntime)
-    implementation(Dependicies.Android.lifecycleLiveData)
 
     //Dagger2
     implementation(Dependicies.DependencyInjection.dagger)
@@ -98,9 +94,6 @@ dependencies {
     //Coroutines
     implementation(Dependicies.Multithreading.coroutines)
     implementation(Dependicies.Kotlin.kotlinReflect)
-
-    //Picasso
-    implementation(Dependicies.glide)
 
     testImplementation(Dependicies.Tests.junit)
     androidTestImplementation(Dependicies.Tests.junitExt)
