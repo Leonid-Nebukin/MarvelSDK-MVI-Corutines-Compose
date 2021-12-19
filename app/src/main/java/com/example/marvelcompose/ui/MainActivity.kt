@@ -17,12 +17,15 @@ import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.lifecycle.lifecycleScope
 import com.example.marvelcompose.data.model.Star
 import com.example.marvelcompose.ui.theme.MarvelComposeTheme
+import com.example.marvelcompose.ui.viewmodel.CharactersList
 import com.example.marvelcompose.ui.viewmodel.MainViewModel
-import com.example.marvelcompose.utils.Status
+import com.example.marvelcompose.utils.UIState
 import com.example.marvelcompose.utils.extension.withViewModel
 import com.skydoves.landscapist.glide.GlideImage
+import kotlinx.coroutines.flow.collect
 
 class MainActivity : BaseActivity() {
 
@@ -33,35 +36,46 @@ class MainActivity : BaseActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        mainViewModel.getCharacters().observe(this, {
-            when (it.status) {
-                Status.LOADING -> {
-                    Toast.makeText(this, "LOADING", Toast.LENGTH_SHORT).show()
-                }
-                Status.SUCCESS -> {
-                    setContent {
-                        MarvelComposeTheme {
-                            LazyColumn() {
-                                items(it.data?.data?.results ?: listOf()) { item ->
-                                    StarsRow(
-                                        star = item,
-                                        onStarClick = {
-                                            Toast.makeText(
-                                                this@MainActivity,
-                                                "You clicked ${it.name}",
-                                                Toast.LENGTH_SHORT
-                                            ).show()
-                                        })
+        mainViewModel.getCharacters()
+
+        lifecycleScope.launchWhenCreated {
+            mainViewModel.characterList.collect() {
+                when (it) {
+                    is UIState.Loading -> {
+                        Toast.makeText(this@MainActivity, "LOADING", Toast.LENGTH_SHORT).show()
+                    }
+                    is CharactersList.Success -> {
+                        setContent {
+                            MarvelComposeTheme {
+                                LazyColumn {
+                                    items(it.data.data.results) { item ->
+                                        StarsRow(
+                                            star = item,
+                                            onStarClick = {
+                                                Toast.makeText(
+                                                    this@MainActivity,
+                                                    "You clicked ${it.name}",
+                                                    Toast.LENGTH_SHORT
+                                                ).show()
+                                            })
+                                    }
                                 }
                             }
                         }
                     }
-                }
-                Status.ERROR -> {
-                    Toast.makeText(this, "ERROR", Toast.LENGTH_SHORT).show()
+                    is UIState.Error -> {
+                        Toast.makeText(this@MainActivity, it.error, Toast.LENGTH_SHORT).show()
+                    }
+                    CharactersList.Empty -> {
+                        setContent {
+                            MarvelComposeTheme {
+                                LazyColumn() { }
+                            }
+                        }
+                    }
                 }
             }
-        })
+        }
     }
 
     @Composable
