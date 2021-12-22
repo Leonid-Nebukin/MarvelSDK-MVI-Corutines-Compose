@@ -15,6 +15,7 @@ object Dependicies {
         const val activity = "androidx.activity:activity-compose:1.4.0"
         const val junitTest = "androidx.compose.ui:ui-test-junit4:$composeVersion"
         const val coil = "io.coil-kt:coil-compose:1.4.0"
+        const val paging = "androidx.paging:paging-compose:1.0.0-alpha14"
     }
 
     object Network {

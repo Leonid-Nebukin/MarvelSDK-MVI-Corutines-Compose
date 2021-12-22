@@ -3,13 +3,13 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
-        <entry key="../../../../../../layout/compose-model-1633977095888.xml" value="0.27280405405405406" />
+        <entry key="../../../../../../layout/compose-model-1640090052949.xml" value="0.2833357507365974" />
+        <entry key="../../../../../../layout/compose-model-1640154712022.xml" value="0.2642954573297513" />
         <entry key="../../../../layout/compose-model-1631992402547.xml" value="0.3112331081081081" />
         <entry key="../../../../layout/compose-model-1632034948914.xml" value="0.1" />
       </map>
     </option>
   </component>
-  <component name="ExternalStorageConfigurationManager" enabled="true" />
   <component name="ProjectRootManager" version="2" languageLevel="JDK_11" default="true" project-jdk-name="11" project-jdk-type="JavaSDK">
     <output url="file://$PROJECT_DIR$/build/classes" />
   </component>

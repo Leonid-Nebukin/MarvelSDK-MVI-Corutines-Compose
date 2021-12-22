@@ -1,9 +1,9 @@
 package com.example.marvelcompose.data.repository
 
-import com.example.marvelcompose.data.model.CharacterResponse
+import androidx.paging.PagingData
+import com.example.marvelcompose.data.model.Star
+import kotlinx.coroutines.flow.Flow
 
 interface IRequestRepository {
-
-    suspend fun characters(): CharacterResponse
-
+    fun characters(): Flow<PagingData<Star>>
 }

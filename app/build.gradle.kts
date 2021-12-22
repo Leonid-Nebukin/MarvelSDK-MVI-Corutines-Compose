@@ -70,6 +70,7 @@ dependencies {
     implementation(Dependicies.Compose.preview)
     implementation(Dependicies.Compose.activity)
     implementation(Dependicies.Compose.coil)
+    implementation(Dependicies.Compose.paging)
     debugImplementation(Dependicies.Compose.tooling)
 
     //Dagger2

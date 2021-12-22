@@ -10,6 +10,8 @@ data class CharacterResponse(
 
 @JsonClass(generateAdapter = true)
 data class Data(
+    @Json(name = "offset") val offset: Int,
+    @Json(name = "limit") val limit: Int,
     @Json(name = "results") val results: List<Star>
 )
 
