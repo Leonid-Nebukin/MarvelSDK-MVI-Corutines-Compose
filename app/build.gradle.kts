@@ -71,6 +71,7 @@ dependencies {
     implementation(Dependicies.Compose.activity)
     implementation(Dependicies.Compose.coil)
     implementation(Dependicies.Compose.paging)
+    implementation(Dependicies.Compose.navigation)
     debugImplementation(Dependicies.Compose.tooling)
 
     //Dagger2

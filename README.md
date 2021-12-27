@@ -1,1 +1,1 @@
-# MarvelSDK-MVVM-Corutines-Compose-
+# MarvelSDK-MVI-Corutines-Compose-

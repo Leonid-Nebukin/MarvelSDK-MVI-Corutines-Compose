@@ -8,12 +8,8 @@ import androidx.paging.PagingData
 import androidx.paging.cachedIn
 import com.example.marvelcompose.data.api.ApiRequest
 import com.example.marvelcompose.data.model.CharacterPagingSource
-import com.example.marvelcompose.data.model.CharacterResponse
 import com.example.marvelcompose.data.model.Star
-import com.example.marvelcompose.utils.UIState
 import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.SharingStarted
-import kotlinx.coroutines.flow.stateIn
 import javax.inject.Inject
 
 class MainViewModel @Inject constructor(
@@ -29,9 +25,4 @@ class MainViewModel @Inject constructor(
             CharacterPagingSource(apiRequest = apiRequest)
         }
     ).flow.cachedIn(viewModelScope)
-}
-
-sealed class CharactersList: UIState() {
-    class Success(val data : CharacterResponse) : UIState()
-    object Empty : UIState()
 }
