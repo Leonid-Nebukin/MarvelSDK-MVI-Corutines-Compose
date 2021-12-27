@@ -10,19 +10,27 @@ import com.example.marvelcompose.data.api.ApiRequest
 import com.example.marvelcompose.data.model.CharacterPagingSource
 import com.example.marvelcompose.data.model.Star
 import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.emptyFlow
 import javax.inject.Inject
 
 class MainViewModel @Inject constructor(
     private val apiRequest: ApiRequest,
 ): ViewModel() {
 
-    val characterList: Flow<PagingData<Star>> = Pager(
-        config = PagingConfig(
-            pageSize = 10,
-            enablePlaceholders = false
-        ),
-        pagingSourceFactory = {
-            CharacterPagingSource(apiRequest = apiRequest)
-        }
-    ).flow.cachedIn(viewModelScope)
+    var characterList: Flow<PagingData<Star>> = emptyFlow()
+
+    fun searchPager(query: String?)  {
+        characterList = Pager(
+            config = PagingConfig(
+                pageSize = 10,
+                enablePlaceholders = false
+            ),
+            pagingSourceFactory = {
+                CharacterPagingSource(
+                    query = query,
+                    apiRequest = apiRequest)
+            }
+        ).flow.cachedIn(viewModelScope)
+    }
+
 }

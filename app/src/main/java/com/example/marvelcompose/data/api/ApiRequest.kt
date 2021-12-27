@@ -14,6 +14,7 @@ interface ApiRequest {
 
     @GET(CHARACTERS)
     suspend fun getCharacters(
+        @Query(NAME_START_WITH) nameStartWith: String? = null,
         @Query(TS_PARAM) timeStamp: String = Date().Timestamp(),
         @Query(KEY_PARAM) key: String = BuildConfig.PUBLIC_KEY,
         @Query(HASH_PARAM) hash: String = String().MD5(timeStamp + BuildConfig.PRIVATE_KEY + BuildConfig.PUBLIC_KEY),
@@ -24,6 +25,7 @@ interface ApiRequest {
     companion object {
         const val CHARACTERS = "/v1/public/characters"
 
+        const val NAME_START_WITH = "nameStartsWith"
         const val TS_PARAM = "ts"
         const val KEY_PARAM = "apikey"
         const val HASH_PARAM = "hash"

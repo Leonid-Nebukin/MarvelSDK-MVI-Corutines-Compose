@@ -6,6 +6,7 @@ import com.example.marvelcompose.data.api.ApiRequest
 import retrofit2.HttpException
 
 class CharacterPagingSource(
+    val query: String?,
     val apiRequest: ApiRequest
 ) : PagingSource<Int, Star>() {
     override fun getRefreshKey(state: PagingState<Int, Star>): Int? {
@@ -17,11 +18,11 @@ class CharacterPagingSource(
         val page = params.key ?: 0
         val pageSize = params.loadSize.coerceAtMost(ApiRequest.MAX_PAGE_SIZE)
 
-        val response = apiRequest.getCharacters(offset = page, limit = pageSize)
+        val response = apiRequest.getCharacters(nameStartWith = query, offset = page, limit = pageSize)
 
         return if (response.isSuccessful) {
             val data = checkNotNull(response.body()).data.results
-            val nextKey = page + data.size
+            val nextKey = if (data.isEmpty()) null else page + data.size
             val prevKey = if (page == 0) null else page - data.size
             LoadResult.Page(data, prevKey, nextKey)
         } else {

@@ -2,14 +2,21 @@ package com.example.marvelcompose.ui
 
 import android.os.Bundle
 import androidx.activity.compose.setContent
-import androidx.compose.material.Scaffold
-import androidx.navigation.NamedNavArgument
-import androidx.navigation.NavType
+import androidx.compose.foundation.layout.*
+import androidx.compose.material.*
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.rememberCoroutineScope
+import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.text.input.TextFieldValue
+import androidx.compose.ui.unit.dp
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
-import androidx.navigation.navArgument
 import com.example.marvelcompose.data.model.Star
+import com.example.marvelcompose.ui.MainActivity.Companion.STAR_KEY
+import com.example.marvelcompose.ui.screens.SearchView
 import com.example.marvelcompose.ui.screens.StarDetailsShow
 import com.example.marvelcompose.ui.screens.StarListShow
 import com.example.marvelcompose.ui.theme.MarvelComposeTheme
@@ -33,25 +40,39 @@ class MainActivity : BaseActivity() {
         setContent {
             MarvelComposeTheme {
                 val navController = rememberNavController()
+                val textState = remember {
+                    mutableStateOf(TextFieldValue(""))
+                }
+                with(textState.value.text) {
+                    if (this.length >= 3) {
+                        mainViewModel.searchPager(this)
+                    } else if (this.isEmpty()){
+                        mainViewModel.searchPager(null)
+                    }
+                }
 
-                Scaffold {
+                Scaffold() {
                     NavHost(
                         navController = navController,
                         startDestination = MainActivityScreens.List.route
                     ) {
                         composable(MainActivityScreens.List.route) {
-                            StarListShow(
-                                mainViewModel.characterList,
-                                this@MainActivity,
-                                navController,
-                                moshi
-                            )
+                            Column {
+                                SearchView(state = textState)
+                                StarListShow(
+                                    characterList = mainViewModel.characterList,
+                                    navController = navController,
+                                    scaffold = rememberScaffoldState(),
+                                    coroutineScope = rememberCoroutineScope(),
+                                    moshi = moshi
+                                )
+                            }
                         }
                         composable(MainActivityScreens.Details.route) { backStackEntry ->
-                            val userJson =  backStackEntry.arguments?.getString("user") ?: ""
+                            val userJson = backStackEntry.arguments?.getString(STAR_KEY) ?: ""
                             val starObject = moshi.fromJson(Star::class.java, userJson)
 
-                            if (starObject != null) {
+                            starObject?.let {
                                 StarDetailsShow(starDetails = starObject)
                             }
                         }
@@ -68,5 +89,5 @@ class MainActivity : BaseActivity() {
 
 sealed class MainActivityScreens(val route: String) {
     object List : MainActivityScreens("list")
-    object Details : MainActivityScreens("user-details/user={user}")
+    object Details : MainActivityScreens("user-details/$STAR_KEY={$STAR_KEY}")
 }

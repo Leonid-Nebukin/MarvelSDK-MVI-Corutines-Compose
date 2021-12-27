@@ -15,13 +15,13 @@ import javax.inject.Inject
 class RequestRepository @Inject constructor(
     private val apiRequest: ApiRequest
 ) : IRequestRepository {
-    override fun characters(): Flow<PagingData<Star>> = Pager(
+    override fun characters(query: String?): Flow<PagingData<Star>> = Pager(
             config = PagingConfig(
                 pageSize = ApiRequest.MAX_PAGE_SIZE,
                 enablePlaceholders = true
             ),
             pagingSourceFactory = {
-                CharacterPagingSource(apiRequest = apiRequest)
+                CharacterPagingSource(apiRequest = apiRequest, query = query)
             }
         ).flow
 }
